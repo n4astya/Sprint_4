@@ -1,61 +1,74 @@
 from locators.locators_order import OrderLocators as O
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions
+from pages.base_page import BasePage
+import allure
 
 
-class Order:
-    def click_button_order(self, driver):
-        driver.find_element(*O.order_button).click()
+class Order(BasePage):
 
-    def set_name(self, driver, name):
-        driver.find_element(*O.name).send_keys(name)
+    @allure.step('Нажимаем на кнопку "Заказать"')
+    def click_button_order(self):
+        self.click_button(O.order_button)
 
-    def set_surname(self, driver, surname):
-        driver.find_element(*O.surname).send_keys(surname)
+    @allure.step('Вводим имя')
+    def set_name(self, name):
+        self.input_info(O.name, name)
 
-    def set_address(self, driver, address):
-        driver.find_element(*O.address).send_keys(address)
+    @allure.step('Вводим фамилию')
+    def set_surname(self, surname):
+        self.input_info(O.surname, surname)
 
-    def click_metro(self, driver):
-        driver.find_element(*O.metro).click()
-        driver.find_element(*O.station).click()
+    @allure.step('Вводим адрес')
+    def set_address(self, address):
+        self.input_info(O.address, address)
 
-    def set_phone(self, driver, phone):
-        driver.find_element(*O.phone).send_keys(phone)
+    @allure.step('Вибираем станцию метро')
+    def click_metro(self):
+        self.click_button(O.metro)
+        self.click_button(O.station)
 
-    def click_button_further(self, driver):
-        driver.find_element(*O.further_button).click()
+    @allure.step('Вводим номер телефона')
+    def set_phone(self, phone):
+        self.input_info(O.phone, phone)
 
-    def click_date(self, driver):
-        driver.find_element(*O.date).click()
-        driver.find_element(*O.date_6).click()
+    @allure.step('Нажимаем на кнопку "Далее"')
+    def click_button_further(self):
+        self.click_button(O.further_button)
 
-    def click_rental_period(self, driver):
-        driver.find_element(*O.rental_period).click()
-        driver.find_element(*O.period).click()
+    @allure.step('Вибираем дату доставки')
+    def click_date(self):
+        self.click_button(O.date)
+        self.click_button(O.date_6)
 
-    def click_color(self, driver):
-        driver.find_element(*O.color).click()
+    @allure.step('Вибираем период использования самоката')
+    def click_rental_period(self):
+        self.click_button(O.rental_period)
+        self.click_button(O.period)
 
-    def click_button_order2(self, driver):
-        driver.find_element(*O.order_button2).click()
+    @allure.step('Вибираем цвет самоката')
+    def click_color(self):
+        self.click_button(O.color)
 
-    def click_yes_button(self, driver):
-        WebDriverWait(driver, 5).until(expected_conditions.presence_of_element_located(O.yes_button))
-        driver.find_element(*O.yes_button).click()
+    @allure.step('Нажимаем на кнопку "Заказать"')
+    def click_button_order2(self):
+        self.click_button(O.order_button2)
 
-    def check_order(self, driver):
-        assert WebDriverWait(driver, 6).until(expected_conditions.presence_of_element_located(O.status_button))
+    @allure.step('Подтверждаем оформление заказа')
+    def click_yes_button(self):
+        self.wait_for_element(O.yes_button)
+        self.click_button(O.yes_button)
 
-    def click_button_order3(self, driver):
-        element = driver.find_element(*O.order_button3)
-        driver.execute_script("arguments[0].scrollIntoView();", element)
-        WebDriverWait(driver, 5).until(expected_conditions.presence_of_element_located(O.order_button3))
-        driver.find_element(*O.order_button3).click()
+    @allure.step('Нажимаем на кнопку "Заказать"')
+    def click_button_order3(self):
+        element = self.driver.find_element(*O.order_button3)
+        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        self.wait_for_element(O.order_button3)
+        self.click_button(O.order_button3)
 
-    def click_color2(self, driver):
-        driver.find_element(*O.color2).click()
+    @allure.step('Вибираем цвет самоката')
+    def click_color2(self):
+        self.click_button(O.color2)
 
-    def click_date2(self, driver):
-        driver.find_element(*O.date).click()
-        driver.find_element(*O.date_10).click()
+    @allure.step('Вибираем дату доставки')
+    def click_date2(self):
+        self.click_button(O.date)
+        self.click_button(O.date_10)
