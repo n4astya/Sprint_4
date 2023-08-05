@@ -4,7 +4,7 @@ import allure
 
 
 class TestOrder:
-    @allure.title('Проверка возможности сделать заказ')
+    @allure.title('Проверка возможности сделать заказ через кнопку "Заказать", которая находится в верхнем углу')
     @allure.description('Нажимаем на кнопку "Заказать", заполняем поля и проверяем, что заказ создан')
     def test_get_order_first(self, driver):
 
@@ -19,14 +19,14 @@ class TestOrder:
         order_page.click_metro()
         order_page.set_phone('89660546789')
         order_page.click_button_further()
-        order_page.click_date()
+        order_page.click_date('6')
         order_page.click_rental_period()
         order_page.click_color()
         order_page.click_button_order2()
         order_page.click_yes_button()
         assert 'Заказ оформлен' in order_page.driver.find_element(*O.order_made).text
 
-    @allure.title('Проверка возможности сделать заказ')
+    @allure.title('Проверка возможности сделать заказ через кнопку "Заказать", которая находится внизу страницы')
     @allure.description('Нажимаем на кнопку "Заказать", заполняем поля и проверяем, что заказ создан')
     def test_get_order_second(self, driver):
 
@@ -41,7 +41,7 @@ class TestOrder:
         order_page.click_metro()
         order_page.set_phone('89660546123')
         order_page.click_button_further()
-        order_page.click_date2()
+        order_page.click_date('10')
         order_page.click_rental_period()
         order_page.click_color2()
         order_page.click_button_order2()

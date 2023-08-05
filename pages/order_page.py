@@ -35,9 +35,10 @@ class Order(BasePage):
         self.click_button(O.further_button)
 
     @allure.step('Вибираем дату доставки')
-    def click_date(self):
+    def click_date(self, date):
         self.click_button(O.date)
-        self.click_button(O.date_6)
+        self.input_info(O.date, date)
+        self.click_button(O.title)
 
     @allure.step('Вибираем период использования самоката')
     def click_rental_period(self):
@@ -59,8 +60,7 @@ class Order(BasePage):
 
     @allure.step('Нажимаем на кнопку "Заказать"')
     def click_button_order3(self):
-        element = self.driver.find_element(*O.order_button3)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        self.scroll_page(O.order_button3)
         self.wait_for_element(O.order_button3)
         self.click_button(O.order_button3)
 
