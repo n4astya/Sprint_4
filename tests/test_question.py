@@ -1,6 +1,30 @@
-from pages.question_page import PageMain as P
+from pages.question_page import PageMain
+from locators.locators_question import QuestionLocators as Q
 import pytest
 import allure
+
+
+class TestMainPage:
+    @allure.title('Переход на страницу Дзен через кнопку "Яндекс"')
+    def test_go_to_dzen(self, driver):
+
+        main_page = PageMain(driver)
+
+        main_page.opening_page('https://qa-scooter.praktikum-services.ru/')
+
+        main_page.click_button_dzen_page()
+        main_page.wait_for_element(Q.find)
+        assert driver.current_url =='https://dzen.ru/?yredirect=true'
+
+    @allure.title('Переход на главную страницу через кнопку "Самокат"')
+    def test_go_to_main_page(self, driver):
+        main_page = PageMain(driver)
+
+        main_page.opening_page('https://qa-scooter.praktikum-services.ru/')
+
+        main_page.click_button(Q.up_button)
+        main_page.click_scooter_button()
+        assert driver.current_url == 'https://qa-scooter.praktikum-services.ru/'
 
 
 class TestQuestion:
@@ -20,10 +44,9 @@ class TestQuestion:
                                                 ['7', 'Да, обязательно. Всем самокатов! И Москве, и Московской области.']
                                             ])
     def test_get_answer(self, driver, num, answers):
+        main_page = PageMain(driver)
 
-        driver.get('https://qa-scooter.praktikum-services.ru/')
-
-        main_page = P(driver)
+        main_page.opening_page('https://qa-scooter.praktikum-services.ru/')
 
         main_page.scroll()
         main_page.click_question(num)

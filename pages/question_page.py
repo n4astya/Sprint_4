@@ -1,4 +1,3 @@
-from selenium.webdriver.common.by import By
 from locators.locators_question import QuestionLocators as Q
 from pages.base_page import BasePage
 import allure
@@ -22,3 +21,13 @@ class PageMain(BasePage):
         method, locator = Q.MY_LOCATOR_answer
         locator = locator.format(num)
         assert answers == self.driver.find_element(method, locator).text
+
+    @allure.step('Нажимаем на лого "Самокат" для перехода на главную страницу')
+    def click_scooter_button(self):
+        self.scroll_page(Q.scooter)
+        self.click_button(Q.scooter)
+
+    @allure.step('Нажимаем на лого "Яндекс" для перехода на главную страницу Дзен')
+    def click_button_dzen_page(self):
+        self.scroll_page(Q.yandex_dzen)
+        self.click_button(Q.yandex_dzen)
